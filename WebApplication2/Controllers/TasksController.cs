@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication2.Models;
 using WebApplication2.Service;
 using WebApplication2.Taskitem;
 
@@ -16,9 +17,10 @@ namespace WebApplication2.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TaskItem>> GetAllTasks()
+        public ActionResult<PagedResult<TaskItem>> GetAllTasks([FromQuery] TaskFilterParams filterParams)
         {
-            return Ok(_service.GetAll());
+            var result = _service.GetAll(filterParams);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
